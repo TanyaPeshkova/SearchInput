@@ -50,8 +50,6 @@
                         $('#result').html('<div class="alert alert-danger">Произошла ошибка: ' + data.error + '</div>');
                     }
                 }).fail(function (jqXHR) {
-                    console.log(jqXHR)
-
                     $('#result').html('<div class="alert alert-danger">Произошла ошибка: ' + jqXHR.responseJSON.error + '</div>');
                 });
             });
