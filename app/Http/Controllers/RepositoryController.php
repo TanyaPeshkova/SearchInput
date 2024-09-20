@@ -26,10 +26,7 @@ class RepositoryController extends Controller
     public function search(Request $request)
     {
         $q = $request->get('query');
-        $repository = Repository::where('name', 'LIKE', $q)->first();
-
-        $api_url = 'https://api.github.com/search/repositories';
-
+        $repository = Repository::where('name', 'like', '%' . $q . '%')->first();
         if (!$repository) {
 
             $response = $this->githubService->searchRepository($q);
@@ -40,12 +37,11 @@ class RepositoryController extends Controller
                 $git_repository->search_url = $response['search_url'];
                 $git_repository->data_json = json_encode($response['data']);
                 $git_repository->save();
+
             } else {
                 return response()->json(["error" => 'Репозиторий не найден']);
             }
 
-        } else {
-            return response()->json(['error' => 'Не удалось подключиться к api GitHub'], 500);
         }
 
 
